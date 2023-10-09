@@ -1,2 +1,2 @@
 # PSP
-Ejercicios de clase de Programación de Servicios y Procesos
+Prácticas de Programación de Servicios y Procesos
