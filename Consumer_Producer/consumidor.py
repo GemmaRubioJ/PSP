@@ -1,22 +1,22 @@
-from multiprocessing import queues
-import queue
 import threading
 from queue import Queue
 import random
 import time
 
-def producer(queu, pt):
+#funcion del productor que genera y mete numeros en la cola
+def producer(q, pt):
     while True:
         for i in range(15):
             number = random.randint(51, 1999)
-            queue.put(number) 
+            q.put(number) 
             time.sleep(pt)
 
-def consumer(queue, ct, x):
+#funcion del consumidor que coge numeros de la cola y calcula la suma de sus cuadrados
+def consumer(q, ct, x):
     while True:
         numbers = []
         for i in range(x):
-            numbers.append(queue.get())
+            numbers.append(q.get())
         sum_of_squares = sum(number ** 2 for number in numbers)
         print(f"Consumidor {threading.current_thread().name} suma de los cuadrados : {sum_of_squares} ")
         time.sleep(ct)
@@ -24,9 +24,9 @@ def consumer(queue, ct, x):
 
 
 def main():
-    pt = 2
-    ct = 6
-    x = 4
+    pt = 1 #sleeptime del productor
+    ct = 3 #sleetime del consumidor
+    x = 5 #numeros que el consumidor lee a la vez
     queue = Queue()
     # Create and start the producer threads
     producer_thread = threading.Thread(target=producer, args=(queue, pt))
